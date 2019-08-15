@@ -1,0 +1,40 @@
+import pandas as pd
+import csv
+
+def search_for_insights(keyword):
+    dictionary = {}
+    with open('insights.csv') as f:
+        csv_reader = csv.reader(f, delimiter = ',')
+        for row in csv_reader:
+            topic = row[0].strip()
+            topic = topic.title()
+            dictionary['Topic'] = topic
+            insight = row[7].strip()
+            dictionary['Patient insight']= []
+            dictionary['Patient insight'].append(insight)
+            category_tags = row[5].strip()
+            dictionary['Category tags']= []
+            if ';' in category_tags:
+                tagList = category_tags.split('; ')
+                for t in tagList:
+                    dictionary['Category tags'].append(t)
+            if ';' not in category_tags:
+                dictionary['Category tags'] = category_tags
+            if keyword.title() in dictionary['Topic']:
+                return dictionary
+
+def extract_with_panda():
+    """Header:
+    imprt csv
+    import panda as pd
+    """
+    
+    #Extract data from file and write to CSV file
+    filename = 'Patient Insights.xlsx'
+    df = pd.read_excel(filename, 'Insights')
+    df.to_csv('Patient Insights.csv', encoding = 'utf-8', header = False, index = False)
+
+def using_panda():
+    extract_with_panda()
+    keyword = input("enter keyword to search 'topics' in database:")
+    result = search_for_insights(keyword)
