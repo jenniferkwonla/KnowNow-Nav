@@ -1,0 +1,35 @@
+#Jennifer Kwon
+def change_color_of_node(self, node_label: str, new_node_color: str, node_style_property: str):
+
+        nodes_styles = []
+
+        with open("style.grass", 'r', newline="") as file_object:
+
+            nodes_styles = file_object.readlines()
+            
+        with open("new_style.grass", 'w') as file_object_2:
+                
+            i = 0
+            while i < len(nodes_styles):
+
+                if node_label in nodes_styles[i]:
+                        
+                    file_object_2.write(nodes_styles[i])
+                        
+                    if node_style_property not in nodes_styles[i]:
+
+                        i+=1
+                            
+                    if node_style_property in nodes_styles[i]:
+                        old_node_color = nodes_styles[i][9:16]
+                        new_string = nodes_styles[i].replace(old_node_color, new_node_color)
+                        file_object_2.write(new_string)
+                        i+=1
+                else:
+                    file_object_2.write(nodes_styles[i]) 
+                    i+=1
+                    
+        return
+       
+       
+ 
